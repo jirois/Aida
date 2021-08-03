@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Aida</string>
+    <string name="edit_text_hint_drug_name">Drug Name</string>
+    <string name="edit_text_hint_quantity">Quantity of drug</string>
+    <string name="edit_text_hint_date">Expiration date</string>
+    <string name="edit_text_hint_pharmacy_name">Pharmacy name</string>
+    <string name="edit_text_hint_pharmacy_location">Location</string>
+    <string name="edit_text_hint_hour">Operation hours</string>
+    <string name="edit_text_hint_drug_price">Drug price</string>
+    <string name="text_add_image">ADD IMAGE</string>
+    <string name="btn_text_save">SAVE</string>
+    <string name="no_record_available_text">No record available yet. Kindly add one</string>
+    <string name="image_content_description">image</string>
 </resources>
