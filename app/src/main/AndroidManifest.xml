@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Aida">
+        <activity android:name=".AddDrugInfo"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomNoActionBarTheme"
+            android:label="ADD DRUG INFO"
+            ></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
