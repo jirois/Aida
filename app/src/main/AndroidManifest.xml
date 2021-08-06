@@ -14,12 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Aida">
-        <activity android:name=".AddDrugInfo"
+        <activity android:name=".activity.AddDrugInfo"
             android:screenOrientation="portrait"
             android:theme="@style/CustomNoActionBarTheme"
             android:label="ADD DRUG INFO"
             ></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

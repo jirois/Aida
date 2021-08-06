@@ -11,4 +11,7 @@
     <string name="btn_text_save">SAVE</string>
     <string name="no_record_available_text">No record available yet. Kindly add one</string>
     <string name="image_content_description">image</string>
+    <string name="aida_item_on_sale_text">On Sale</string>
+    <string name="aida_item_price_title">Price</string>
+    <string name="aida_item_expire_date_title">Expire Date</string>
 </resources>

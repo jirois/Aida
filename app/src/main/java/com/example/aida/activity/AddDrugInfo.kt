@@ -1,4 +1,4 @@
-package com.example.aida
+package com.example.aida.activity
 
 import android.Manifest
 import android.app.Activity
@@ -17,7 +17,9 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.example.aida.R
 import com.example.aida.databinding.ActivityAddDrugInfoBinding
+import com.example.aida.model.DrugModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -35,9 +37,13 @@ class AddDrugInfo : AppCompatActivity() {
     private var cal = Calendar.getInstance()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
 
+    private var saveImageToInternalStorage: Uri? = null
+    private var mLatitude: Double = 0.0
+    private var mLongitude: Double = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_add_drug_info)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_drug_info)
 
         setSupportActionBar(binding.toolbarAddDrug)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -47,7 +53,7 @@ class AddDrugInfo : AppCompatActivity() {
 
 
         dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            cal.set(Calendar.DAY_OF_YEAR, year)
+            cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
@@ -67,10 +73,10 @@ class AddDrugInfo : AppCompatActivity() {
         binding.tvAddImage.setOnClickListener {
             val pictureDialog = androidx.appcompat.app.AlertDialog.Builder(this)
             pictureDialog.setTitle("Select Action")
-            val pictureDialogItems = arrayOf("Select photo from gallery", "Capture photo from camera" )
-            pictureDialog.setItems( pictureDialogItems ){
-                    _, which ->
-                when(which){
+            val pictureDialogItems =
+                arrayOf("Select photo from gallery", "Capture photo from camera")
+            pictureDialog.setItems(pictureDialogItems) { _, which ->
+                when (which) {
                     0 -> choosePhotoFromGallery()
                     1 -> takePhotoFromCamera()
                 }
@@ -78,7 +84,51 @@ class AddDrugInfo : AppCompatActivity() {
             pictureDialog.show()
         }
 
+        binding.btnSave.setOnClickListener {
+            when {
+                binding.etDrugName.text.isNullOrEmpty() -> {
+                    Toast.makeText(this, "Please enter drug name", Toast.LENGTH_SHORT).show()
+                }
+                binding.etDrugPrice.text.isNullOrEmpty() -> {
+                    Toast.makeText(this, "Please enter drug price", Toast.LENGTH_SHORT).show()
+                }
+                binding.etExpirationDate.text.isNullOrEmpty() -> {
+                    Toast.makeText(this, "Please enter drug expiration date", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                binding.etPharmacy.text.isNullOrEmpty() -> {
+                    Toast.makeText(this, "Please enter pharmacy name", Toast.LENGTH_SHORT).show()
+                }
 
+                binding.etLocation.text.isNullOrEmpty() -> {
+                    Toast.makeText(this, "Please enter location", Toast.LENGTH_SHORT).show()
+
+                }
+                saveImageToInternalStorage == null -> {
+
+                    Toast.makeText(this, "Please enter image", Toast.LENGTH_SHORT).show()
+
+                }
+                else -> {
+                    val drugModel = DrugModel(
+                        0,
+                        binding.etDrugName.text.toString(),
+                        binding.etDrugPrice.text.toString(),
+                        binding.etDrugPrice.text.toString(),
+                        saveImageToInternalStorage.toString(),
+                        binding.etPharmacy.text.toString(),
+                        binding.etLocation.text.toString(),
+                        mLatitude,
+                        mLongitude
+                    )
+                    val listClass = MainActivity()
+                    listClass.drugModelList.add(drugModel)
+
+                }
+            }
+
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -91,6 +141,10 @@ class AddDrugInfo : AppCompatActivity() {
                         val selectedImageBitmap =
                             MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
 
+                        saveImageToInternalStorage = saveImageToInternalStorage(selectedImageBitmap)
+                        Log.e("Save Image: ", "Path :: $saveImageToInternalStorage")
+
+
                         binding.ivPlaceImage!!.setImageBitmap(selectedImageBitmap)
                     } catch (e: IOException) {
                         e.printStackTrace()
@@ -100,6 +154,10 @@ class AddDrugInfo : AppCompatActivity() {
                 }
             } else if (requestCode == CAMERA){
                 val thumbnail: Bitmap = data!!.extras!!.get("data") as Bitmap
+
+                saveImageToInternalStorage = saveImageToInternalStorage(thumbnail)
+                Log.e("Save Image: ", "Path :: $saveImageToInternalStorage")
+
 
                 binding.ivPlaceImage!!.setImageBitmap(thumbnail)
             }
@@ -194,6 +252,28 @@ class AddDrugInfo : AppCompatActivity() {
                 dialog.dismiss()
             }.show()
 
+    }
+
+    private fun saveImageToInternalStorage(bitmap: Bitmap): Uri{
+
+        val wrapper = ContextWrapper(applicationContext)
+
+        var file = wrapper.getDir(IMAGE_DIRECTORY, Context.MODE_PRIVATE)
+
+        file = File(file, "${UUID.randomUUID()}.jpg")
+
+        try {
+            val stream: OutputStream = FileOutputStream(file)
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+            stream.flush()
+
+            stream.close()
+        } catch (e: IOException){
+            e.printStackTrace()
+        }
+        return Uri.parse(file.absolutePath)
     }
 
     companion object{
