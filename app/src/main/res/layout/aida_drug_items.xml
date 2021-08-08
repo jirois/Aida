@@ -80,7 +80,6 @@
                     android:text="@string/aida_item_price_title"
                     android:textColor="@color/secondary_text_color"
                     android:textSize="@dimen/aida_item_title_text_size"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_drug_name"
                     tools:text="Price" />
@@ -117,13 +116,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginEnd="48dp"
-                    android:layout_marginRight="48dp"
-                    android:textColor="@color/primary_text_color"
+                    android:layout_marginEnd="54dp"
+                    android:layout_marginRight="54dp"
                     android:textStyle="bold"
+                    android:textColor="@color/primary_text_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_date_title"
-                    tools:text="Oct, 2022" />
+                    tools:text="Oct, 2022"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
