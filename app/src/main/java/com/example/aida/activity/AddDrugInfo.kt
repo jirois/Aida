@@ -18,6 +18,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.aida.R
+import com.example.aida.database.DatabaseHandler
 import com.example.aida.databinding.ActivityAddDrugInfoBinding
 import com.example.aida.model.DrugModel
 import com.karumi.dexter.Dexter
@@ -114,15 +115,23 @@ class AddDrugInfo : AppCompatActivity() {
                         0,
                         binding.etDrugName.text.toString(),
                         binding.etDrugPrice.text.toString(),
-                        binding.etDrugPrice.text.toString(),
+                        binding.etExpirationDate.text.toString(),
                         saveImageToInternalStorage.toString(),
                         binding.etPharmacy.text.toString(),
                         binding.etLocation.text.toString(),
                         mLatitude,
                         mLongitude
                     )
-                    val listClass = MainActivity()
-                    listClass.drugModelList.add(drugModel)
+
+                    // initialize database
+                    val dbHandler = DatabaseHandler(this)
+
+                    val aidaDrugs = dbHandler.addAidaDrug(drugModel)
+
+                    if (aidaDrugs > 0) {
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
 
                 }
             }

@@ -29,7 +29,7 @@
             android:padding="5dp">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_list_image"
-                android:layout_width="85dp"
+                android:layout_width="105dp"
                 android:layout_height="85dp"
                 android:contentDescription="@string/image_content_description"
                 app:srcCompat="@mipmap/ic_launcher"
@@ -44,15 +44,14 @@
                     android:id="@+id/tv_drug_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:textSize="24sp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:textColor="@color/primary_text_color"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Drug Name"
-                    />
+                    tools:text="Drug Name" />
 
                 <TextView
                     android:id="@+id/tv_onsale"
@@ -75,30 +74,29 @@
                     android:id="@+id/tv_price_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
                     android:text="@string/aida_item_price_title"
-                    android:textSize="@dimen/aida_item_title_text_size"
                     android:textColor="@color/secondary_text_color"
+                    android:textSize="@dimen/aida_item_title_text_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_drug_name"
-                    tools:text="Price"
-                    />
+                    tools:text="Price" />
 
                 <TextView
                     android:id="@+id/tv_drug_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="4dp"
-                    android:textStyle="bold"
                     android:textColor="@color/primary_text_color"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_price_title"
-                    tools:text="#150"
-                    />
+                    tools:text="#150" />
 
                 <TextView
                     android:id="@+id/tv_date_title"
@@ -119,14 +117,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginEnd="54dp"
-                    android:layout_marginRight="54dp"
-                    android:textStyle="bold"
+                    android:layout_marginEnd="48dp"
+                    android:layout_marginRight="48dp"
                     android:textColor="@color/primary_text_color"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_date_title"
-                    tools:text="Oct, 2022"
-                    />
+                    tools:text="Oct, 2022" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
