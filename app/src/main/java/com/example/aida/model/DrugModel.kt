@@ -1,5 +1,7 @@
 package com.example.aida.model
 
+import java.io.Serializable
+
 data class DrugModel(
     val id: Int,
     val drugName: String,
@@ -10,4 +12,4 @@ data class DrugModel(
     val pharmacyLocation: String,
     val latitude: Double,
     val longitude: Double
-)
+):Serializable

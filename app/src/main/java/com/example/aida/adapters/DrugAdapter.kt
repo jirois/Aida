@@ -21,6 +21,7 @@ class DrugAdapter(
         notifyDataSetChanged()
     }
 
+    private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
@@ -36,10 +37,24 @@ class DrugAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model = data[position]
         holder.bind(model)
+        holder.itemView.setOnClickListener {
+            if (onClickListener != null) {
+                onClickListener!!.onClick(position, model)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener){
+        this.onClickListener = onClickListener
+
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, model: DrugModel)
     }
 
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){

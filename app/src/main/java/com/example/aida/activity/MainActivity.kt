@@ -67,10 +67,23 @@ class MainActivity : AppCompatActivity() {
         val drugAdapter = DrugAdapter(this, drugList)
         binding.rvAidaDrug.adapter = drugAdapter
 
+        drugAdapter.setOnClickListener(object:
+            DrugAdapter.OnClickListener{
+            override fun onClick(position: Int, model: DrugModel) {
+                val intent = Intent(this@MainActivity, AidaDrugDetails::class.java)
+                intent.putExtra(EXTRA_DRUG_DETAILS, model)
+                startActivity(intent)
+            }
+
+        }
+        )
+
     }
 
 
     companion object {
         private const val ADD_AIDA_DRUG_REQUEST = 1
+
+        internal const val EXTRA_DRUG_DETAILS = "extra_drug_details"
     }
 }
