@@ -38,6 +38,8 @@ class AddDrugInfo : AppCompatActivity() {
     private var cal = Calendar.getInstance()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
 
+    private var mAidaDrugs: DrugModel? = null
+
     private var saveImageToInternalStorage: Uri? = null
     private var mLatitude: Double = 0.0
     private var mLongitude: Double = 0.0
@@ -52,6 +54,10 @@ class AddDrugInfo : AppCompatActivity() {
             onBackPressed()
         }
 
+        if (intent.hasExtra(MainActivity.EXTRA_DRUG_DETAILS)){
+            mAidaDrugs = intent.getSerializableExtra(MainActivity.EXTRA_DRUG_DETAILS) as DrugModel
+        }
+
 
         dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
@@ -59,6 +65,24 @@ class AddDrugInfo : AppCompatActivity() {
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
             updateDateInView()
+        }
+
+        if (mAidaDrugs != null) {
+            supportActionBar?.title = "Edit Drug Info"
+
+            binding.etDrugName.setText(mAidaDrugs!!.drugName)
+            binding.etDrugPrice.setText(mAidaDrugs!!.drugPrice)
+            binding.etExpirationDate.setText(mAidaDrugs!!.drugDate)
+            binding.etPharmacy.setText(mAidaDrugs!!.pharmacyName)
+            binding.etLocation.setText(mAidaDrugs!!.pharmacyLocation)
+            mLatitude = mAidaDrugs!!.latitude
+            mLongitude = mAidaDrugs!!.longitude
+
+            saveImageToInternalStorage = Uri.parse(mAidaDrugs!!.drugImage)
+
+            binding.ivPlaceImage.setImageURI(saveImageToInternalStorage)
+
+            binding.btnSave.text = "UPDATE"
         }
 
         binding.etExpirationDate.setOnClickListener {
@@ -126,11 +150,20 @@ class AddDrugInfo : AppCompatActivity() {
                     // initialize database
                     val dbHandler = DatabaseHandler(this)
 
-                    val aidaDrugs = dbHandler.addAidaDrug(drugModel)
+                    if (mAidaDrugs == null ) {
+                        val aidaDrugs = dbHandler.addAidaDrug(drugModel)
 
-                    if (aidaDrugs > 0) {
-                        setResult(Activity.RESULT_OK)
-                        finish()
+                        if (aidaDrugs > 0) {
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
+                    } else {
+                        val updateDrugInfo = dbHandler.updateAidaDrug(drugModel)
+
+                        if (updateDrugInfo > 0) {
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
                     }
 
                 }

@@ -1,6 +1,8 @@
 package com.example.aida.adapters
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aida.R
+import com.example.aida.activity.AddDrugInfo
+import com.example.aida.activity.MainActivity
 import com.example.aida.model.DrugModel
 
 class DrugAdapter(
@@ -42,6 +46,16 @@ class DrugAdapter(
                 onClickListener!!.onClick(position, model)
             }
         }
+    }
+
+    fun notifyEditItem(activity: Activity, position: Int, requestcode: Int){
+        val intent = Intent(context, AddDrugInfo::class.java)
+        intent.putExtra(MainActivity.EXTRA_DRUG_DETAILS, data[position])
+        activity.startActivityForResult(
+            intent,
+            requestcode
+        )
+        notifyItemChanged(position)
     }
 
     override fun getItemCount(): Int {

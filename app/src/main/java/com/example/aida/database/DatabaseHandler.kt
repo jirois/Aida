@@ -109,4 +109,25 @@ class DatabaseHandler (context: Context):
         return aidaDrugList
     }
 
+
+    fun updateAidaDrug(aidaDrug: DrugModel):Int {
+        val db = this.writableDatabase
+
+        val contentValues = ContentValues()
+        contentValues.put(KEY_DRUG_NAME, aidaDrug.drugName)
+        contentValues.put(KEY_DRUG_PRICE, aidaDrug.drugPrice)
+        contentValues.put(KEY_DRUG_EXPIRATION, aidaDrug.drugDate)
+        contentValues.put(KEY_IMAGE, aidaDrug.drugImage)
+        contentValues.put(KEY_PHARMACY_NAME, aidaDrug.pharmacyName)
+        contentValues.put(KEY_LOCATION, aidaDrug.pharmacyLocation)
+        contentValues.put(KEY_LATITUDE, aidaDrug.latitude)
+        contentValues.put(KEY_LONGITUDE, aidaDrug.longitude)
+
+        // Updating Row
+        val success =
+            db.update(TABLE_AIDA_DRUG, contentValues, KEY_ID + "=" + aidaDrug.id, null)
+        db.close()
+        return success
+    }
+
 }

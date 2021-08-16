@@ -7,12 +7,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.aida.R
 import com.example.aida.adapters.DrugAdapter
 import com.example.aida.database.DatabaseHandler
 import com.example.aida.databinding.ActivityMainBinding
 import com.example.aida.model.DrugModel
+import com.example.aida.utils.SwipeToEditCallback
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -77,6 +80,21 @@ class MainActivity : AppCompatActivity() {
 
         }
         )
+
+        // Bind the edit feature class to recyclerview
+        val editSwipeHandler = object: SwipeToEditCallback(this){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.rvAidaDrug.adapter as DrugAdapter
+                adapter.notifyEditItem(
+                    this@MainActivity,
+                    viewHolder.adapterPosition,
+                    ADD_AIDA_DRUG_REQUEST
+                )
+            }
+
+        }
+        val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
+        editItemTouchHelper.attachToRecyclerView(binding.rvAidaDrug)
 
     }
 
