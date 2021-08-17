@@ -15,6 +15,7 @@ import com.example.aida.adapters.DrugAdapter
 import com.example.aida.database.DatabaseHandler
 import com.example.aida.databinding.ActivityMainBinding
 import com.example.aida.model.DrugModel
+import com.example.aida.utils.SwipeToDeleteCallback
 import com.example.aida.utils.SwipeToEditCallback
 
 class MainActivity : AppCompatActivity() {
@@ -95,6 +96,19 @@ class MainActivity : AppCompatActivity() {
         }
         val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
         editItemTouchHelper.attachToRecyclerView(binding.rvAidaDrug)
+
+        // Bind the delete feature class to recyclerview
+        val deleteSwipeHandler = object: SwipeToDeleteCallback(this){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.rvAidaDrug.adapter as DrugAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+
+                getAidaDrugListFromLocalDB()
+
+            }
+        }
+        val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
+        deleteItemTouchHelper.attachToRecyclerView(binding.rvAidaDrug)
 
     }
 

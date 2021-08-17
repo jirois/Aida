@@ -136,7 +136,8 @@ class AddDrugInfo : AppCompatActivity() {
                 }
                 else -> {
                     val drugModel = DrugModel(
-                        0,
+                        // Changing the id if it for edit
+                        if (mAidaDrugs == null) 0 else mAidaDrugs!!.id ,
                         binding.etDrugName.text.toString(),
                         binding.etDrugPrice.text.toString(),
                         binding.etExpirationDate.text.toString(),

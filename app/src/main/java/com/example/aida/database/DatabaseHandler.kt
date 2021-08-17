@@ -130,4 +130,12 @@ class DatabaseHandler (context: Context):
         return success
     }
 
+    fun deleteAidaDrug(aidaDrug: DrugModel): Int{
+        val db = this.writableDatabase
+
+        val success = db.delete(TABLE_AIDA_DRUG,KEY_ID + "=" + aidaDrug.id, null )
+        db.close()
+        return success
+    }
+
 }

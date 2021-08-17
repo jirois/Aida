@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.aida.R
 import com.example.aida.activity.AddDrugInfo
 import com.example.aida.activity.MainActivity
+import com.example.aida.database.DatabaseHandler
 import com.example.aida.model.DrugModel
 
 class DrugAdapter(
@@ -57,6 +58,16 @@ class DrugAdapter(
         )
         notifyItemChanged(position)
     }
+
+    fun removeAt(position: Int) {
+        val dbHandler = DatabaseHandler(context)
+        val isDeleted = dbHandler.deleteAidaDrug(data[position])
+        if (isDeleted > 0) {
+            data.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
 
     override fun getItemCount(): Int {
         return data.size

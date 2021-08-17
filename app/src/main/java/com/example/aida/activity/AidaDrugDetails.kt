@@ -36,6 +36,7 @@ class AidaDrugDetails : AppCompatActivity() {
             binding.tvExpireDateDetail.text = aidaDrugDetailModel.drugDate
             binding.tvPharmacyDetail.text = aidaDrugDetailModel.pharmacyName
             binding.tvRxaddressDetail.text = aidaDrugDetailModel.pharmacyLocation
+            binding.tvPriceDetail.text = aidaDrugDetailModel.drugPrice
 
 
         }
